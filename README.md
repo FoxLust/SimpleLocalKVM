@@ -1,4 +1,4 @@
-# Klien SimpleLocalKVM
+# SimpleLocalKVM
 
 **SimpleLocalKVM** adalah klien KVM (Keyboard, Video, Mouse) yang sederhana menggunakan koneksi kabel-ke-kabel langsung.
 
@@ -62,17 +62,14 @@ CIRCUITPY/
 ```
 
 ## 📖 Cara Penggunaan
-5.  Hubungkan **HDMI Capture Card** ke laptop Anda dan PC target.
-6.  Hubungkan **USB to TTL Serial adapter** ke laptop Anda.
-7.  Hubungkan **Kabel Pico** ke PC target.
-8.  Jalankan `SimpleLocalKVM_Portable.exe`.
-9.  Pilih **Sumber Video** (Capture Card).
-10. Pilih **Serial Port** (USB to TTL Serial adapter).
-11. (Opsional) Aktifkan **Audio Capture**.
-12. Klik **CONNECT**.
-
-## Menyalakan USB drive di Pico untuk update code.py
-Jika anda menyalin boot.py ke pico, maka pico akan menonaktifkan USB drive. Untuk mengaktifkan USB drive, anda perlu jumper pin GP14 dengan GND saat menyalakan pico.
+1.  Hubungkan **HDMI Capture Card** ke laptop Anda dan PC target.
+2.  Hubungkan **USB to TTL Serial adapter** ke laptop Anda.
+3.  Hubungkan **Kabel Pico** ke PC target.
+4.  Jalankan `SimpleLocalKVM_Portable.exe`.
+5.  Pilih **Sumber Video** (Capture Card).
+6.  Pilih **Serial Port** (USB to TTL Serial adapter).
+7.  (Opsional) Aktifkan **Audio Capture**.
+8.  Klik **CONNECT**.
 
 ## 🔜 Rencana Pengembangan (Roadmap)
 -   [x] Klien Windows (Selesai)
