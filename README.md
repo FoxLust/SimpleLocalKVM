@@ -1,6 +1,6 @@
 # SimpleLocalKVM Client
 
-**SimpleLocalKVM** is a streamlined KVM (Keyboard, Video, Mouse) client designed for IT professionals and server administrators.
+**SimpleLocalKVM** is a streamlined KVM (Keyboard, Video, Mouse) client with direct cable to cable connection.
 
 ## 🎯 Purpose
 Do you often find yourself installing servers or troubleshooting computers where you need a monitor, keyboard, and mouse, but only have your laptop?
@@ -19,23 +19,37 @@ Perfect for "side-by-side" maintenance without lugging around extra peripherals.
 -   **Smart Detection**: Auto-detects Capture Cards, Audio Interfaces, and Serial Ports.
 
 ## 🛠️ Hardware Requirements
-1.  **HDMI Capture Card** (USB 2.0/3.0) - Connects Target GPU -> Laptop USB.
-2.  **Raspberry Pi Pico** (with CH9329 HID firmware or similar) - Connects Laptop USB -> Target USB.
-3.  **Windows Laptop** (Host).
+1.  **HDMI Capture Card** (USB 2.0/3.0)
+2.  **Raspberry Pi Pico** (with CircuitPython HID Firmware)
+3.  **Any USB to TTL Serial adapter** (CP2102, CH340, etc)
+4.  **Windows Laptop** (Host).
+
+## 🔌 Wiring Diagram
+1. **Diagram Pin (Wiring)**
+   Anda hanya membutuhkan 3 kabel jumper untuk menghubungkan USB-to-TTL Adapter ke Raspberry Pi Pico.
+
+   **Koneksi:**
+   - **USB-to-TTL (TX)** -> Hubungkan ke -> **Pico (GP1 / UART0 RX)**
+   - **USB-to-TTL (GND)** -> Hubungkan ke -> **Pico (GND)**
+   - **USB-to-TTL (RX)** -> (Opsional) -> **Pico (GP0 / UART0 TX)**
+   - **USB-to-TTL (5V)** -> **JANGAN HUBUNGKAN** (Biarkan Pico menyala dari USB PC Remote agar aman).
 
 ## 📖 How to Use
-1.  Connect the **HDMI Capture Card** to your laptop and the target PC.
-2.  Connect the **Pico/HID Device** to your laptop and the target PC.
-3.  Run `SimpleLocalKVM_Portable.exe`.
-4.  Select your **Video Source** (Capture Card).
-5.  Select your **Serial Port** (Pico).
-6.  (Optional) Enable **Audio Capture**.
-7.  Click **CONNECT**.
+1.  Flash CircuitPython Firmware (https://circuitpython.org/board/raspberry_pi_pico/).
+2.  Copy Adafruit_CircuitPython_HID Library to /lib folder on Pico.
+3.  Copy code.py to Pico.
+4.  (Optional) Copy boot.py to Pico. (if you want to disable drive mode)
+5.  Connect the **HDMI Capture Card** to your laptop and the target PC.
+6.  Connect the **Pico/HID Device** to your laptop and the target PC.
+7.  Run `SimpleLocalKVM_Portable.exe`.
+8.  Select your **Video Source** (Capture Card).
+9.  Select your **Serial Port** (Pico).
+10. (Optional) Enable **Audio Capture**.
+11. Click **CONNECT**.
 
 ## 🔜 Roadmap
 -   [x] Windows Client (Complete)
 -   [ ] **Android Client**: Use your tablet or phone as a KVM monitor (Coming Soon!)
--   [ ] MacOS Support
 
 ## ❤️ Credits
 Made with love from **FoxLust**.
