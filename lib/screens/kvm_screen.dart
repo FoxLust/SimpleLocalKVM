@@ -125,7 +125,6 @@ class _KvmScreenState extends State<KvmScreen> {
   final FocusNode _focusNode = FocusNode();
   int _mouseButtons = 0;
   final Set<int> _pressedKeys = {}; // Track pressed HID codes
-  bool _ignoreNextMouse = false; // Flag to ignore synthetic moves
 
   void _handleKey(RawKeyEvent event) {
     // Update Caps Lock state on every key event for accuracy
@@ -219,7 +218,6 @@ class _KvmScreenState extends State<KvmScreen> {
           // Initial lock and center
           WindowsMouseLock.lockToWindow();
           WindowsMouseLock.moveCursorToCenter();
-          _ignoreNextMouse = true; // reset flag
         }
       }
     });
@@ -445,24 +443,27 @@ class _KvmScreenState extends State<KvmScreen> {
   void _handleMouseMove(PointerEvent event, SerialService service) {
     if (!_isCapturing) return;
     
-    // Ignore synthetic move caused by re-centering
-    if (_ignoreNextMouse) {
-      _ignoreNextMouse = false;
+    // Calculate the center of the screen (Logical Pixels)
+    final size = MediaQuery.of(context).size;
+    final center = Offset(size.width / 2, size.height / 2);
+    
+    // Calculate displacement from center
+    final deltaOffset = event.localPosition - center;
+    
+    // If we are at (or very close to) center, this is likely the synthetic move
+    // caused by moveCursorToCenter(). Ignore it.
+    if (deltaOffset.distance < 2.0) {
       return;
     }
 
-    int dx = event.localDelta.dx.toInt();
-    int dy = event.localDelta.dy.toInt();
-
-    // If no movement, ignore
-    if (dx == 0 && dy == 0) return;
+    int dx = deltaOffset.dx.toInt();
+    int dy = deltaOffset.dy.toInt();
 
     _sendMouseUpdate(service, dx.clamp(-127, 127), dy.clamp(-127, 127), 0);
 
     // Re-center mouse to allow infinite scrolling
     if (Platform.isWindows) {
        WindowsMouseLock.moveCursorToCenter();
-       _ignoreNextMouse = true;
     }
   }
 
